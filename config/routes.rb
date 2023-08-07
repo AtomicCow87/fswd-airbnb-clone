@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get '/property/:id' => 'static_pages#property'
   get '/login' => 'static_pages#login'
+  get '/logout' => 'static_pages#logout'
 
   namespace :api do
     # Add routes below this line

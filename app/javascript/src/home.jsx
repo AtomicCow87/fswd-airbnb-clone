@@ -12,9 +12,24 @@ class Home extends React.Component {
     total_pages: null,
     next_page: null,
     loading: true,
+    authenticated: false,
+    username: null,
   }
 
   componentDidMount() {
+    fetch('/api/authenticated')
+      .then(handleErrors)
+      .then(data => {
+        this.setState({
+          authenticated: data.authenticated,
+          username: data.username,
+        })
+      })
+
+    this.getProperties();
+  }
+
+  getProperties = () => {
     fetch('/api/properties?page=1')
       .then(handleErrors)
       .then(data => {
