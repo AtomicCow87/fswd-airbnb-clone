@@ -34,7 +34,7 @@ gem 'bcrypt', '~> 3.1'
 gem 'stripe'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
 # AWS S3
 gem 'aws-sdk-s3', '~> 1.114'
 # Webrick
@@ -42,8 +42,11 @@ gem 'webrick', '~> 1.7'
 # Mail gem
 gem 'mail', '>= 2.8.0.rc1'
 
+# Active Storage Image Processing
+# gem 'ruby-vips', '~> 2.1', '>= 2.1.4'
+
 # Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
+gem 'mini_magick', '~> 4.8'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
