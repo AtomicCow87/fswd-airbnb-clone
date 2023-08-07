@@ -35,7 +35,7 @@ const Layout = (props) => {
                   <a className="nav-link" href="/logout">Logout</a>
                 </li>
               </ul>
-              )}
+            )}
           </div>
         </div>
       </nav>
