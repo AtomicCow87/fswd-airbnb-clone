@@ -12,17 +12,6 @@ class Logout extends React.Component {
     error: '',
   }
 
-  componentDidMount() {
-    fetch('/api/authenticated')
-      .then(handleErrors)
-      .then(data => {
-        this.setState({
-          authenticated: data.authenticated,
-          username: data.username,
-        })
-      })
-  }
-
   endSession = () => {
     fetch('/api/sessions/logout', safeCredentials({
       method: 'DELETE',

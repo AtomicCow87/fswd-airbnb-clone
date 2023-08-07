@@ -10,8 +10,6 @@ class Property extends React.Component {
   state = {
     property: {},
     loading: true,
-    authenticated: false,
-    username: null,
   }
 
   componentDidMount() {
@@ -21,19 +19,6 @@ class Property extends React.Component {
         this.setState({
           property: data.property,
           loading: false,
-        })
-      })
-
-    this.authenticate();
-  }
-
-  authenticate = () => {
-    fetch('/api/authenticated')
-      .then(handleErrors)
-      .then(data => {
-        this.setState({
-          authenticated: data.authenticated,
-          username: data.username,
         })
       })
   }

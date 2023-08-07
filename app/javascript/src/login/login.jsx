@@ -11,7 +11,6 @@ class Login extends React.Component {
   state = {
     authenticated: false,
     show_login: true,
-    username: null,
   }
 
   componentDidMount() {
@@ -20,7 +19,6 @@ class Login extends React.Component {
       .then(data => {
         this.setState({
           authenticated: data.authenticated,
-          username: data.username,
         })
       })
   }

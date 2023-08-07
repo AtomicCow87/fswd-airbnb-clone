@@ -2,6 +2,8 @@
 import React from 'react';
 
 const Layout = (props) => {
+
+  console.log(props);
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand navbar-light bg-light">
