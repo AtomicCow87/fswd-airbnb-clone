@@ -9,6 +9,7 @@ class Logout extends React.Component {
   state = {
     authenticated: false,
     username: null,
+    error: '',
   }
 
   componentDidMount() {
@@ -35,11 +36,16 @@ class Logout extends React.Component {
           })
         }
       })
+      .catch(error => {
+        this.setState({
+          error: 'Could not log out.',
+        })
+      })
   }
 
 
   render () {
-    const { authenticated, username } = this.state;
+    const { authenticated, username, error } = this.state;
     if (!authenticated) {
       return (
         <Layout>
@@ -58,7 +64,7 @@ class Logout extends React.Component {
         </Layout>
       );
     }
-
+ 
     return (
       <Layout>
         <div className="container">
@@ -67,6 +73,7 @@ class Logout extends React.Component {
               <div className="border p-4">
                 <p className="mb-0">Are you sure you want to log out {username}?</p>
                 <button className="btn btn-danger" onClick={this.endSession}>Logout</button>
+                {error && <p className="text-danger">{error}</p>}
               </div>
             </div>
           </div>
