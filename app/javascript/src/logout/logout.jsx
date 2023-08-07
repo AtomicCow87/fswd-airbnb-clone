@@ -24,7 +24,7 @@ class Logout extends React.Component {
   }
 
   endSession = () => {
-    fetch('/api/sessions/', safeCredentials({
+    fetch('/api/sessions/logout', safeCredentials({
       method: 'DELETE',
     }))
       .then(handleErrors)
