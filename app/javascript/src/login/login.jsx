@@ -14,6 +14,13 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
+    let params = window.location.pathname;
+    if (params === '/signup') {
+      this.setState({
+        show_login: false,
+      })
+    }
+
     fetch('/api/authenticated')
       .then(handleErrors)
       .then(data => {
