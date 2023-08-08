@@ -71,8 +71,10 @@ class Logout extends React.Component {
           <div className="row">
             <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
               <div className="border p-4">
-                <p className="mb-0">Are you sure you want to log out {username}?</p>
-                <button className="btn btn-danger" onClick={this.endSession}>Logout</button>
+                <p className="mb-0 mb-5 text-center">Are you sure you want to log out {username}?</p>
+                <div className="d-grid gap-2 mx-auto">
+                  <button className="btn btn-danger" onClick={this.endSession}>Logout</button>
+                </div>
                 {error && <p className="text-danger">{error}</p>}
               </div>
             </div>
