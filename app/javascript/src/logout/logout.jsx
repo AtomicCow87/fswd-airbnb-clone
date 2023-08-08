@@ -12,6 +12,17 @@ class Logout extends React.Component {
     error: '',
   }
 
+  componentDidMount() {
+    fetch('/api/authenticated')
+      .then(handleErrors)
+      .then(data => {
+        this.setState({
+          authenticated: data.authenticated,
+          username: data.username,
+        })
+      })
+  }
+
   endSession = () => {
     fetch('/api/sessions/logout', safeCredentials({
       method: 'DELETE',
@@ -24,6 +35,9 @@ class Logout extends React.Component {
             username: null,
           })
         }
+      })
+      .then (() => {
+        window.location.href = '/';
       })
       .catch(error => {
         this.setState({
@@ -43,9 +57,6 @@ class Logout extends React.Component {
               <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
                 <div className="border p-4">
                   <p className="mb-0">You are not logged in 😞</p>
-                </div>
-                <div className="border p-4">
-                  <a href="/login">Login</a>
                 </div>
               </div>
             </div>
