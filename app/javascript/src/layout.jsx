@@ -30,15 +30,18 @@ const Layout = (props) => {
                 <li className="nav-item">
                   <a className="nav-link" href="/">Home</a>
                 </li>               
-                  <li className="nav-item">
-                    <a className="nav-link" href={`/users/${username}`}>My Account</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href={`/users/${username}/bookings`}>My Bookings</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="/logout">Logout</a>
-                  </li>               
+                <li className="nav-item">
+                  <a className="nav-link" href={`/users/${username}`}>My Account</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href={`/users/${username}/bookings`}>My Bookings</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href={`/users/${username}/properties`}>My Properties</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/logout">Logout</a>
+                </li>               
               </ul>
             ) : (
               <ul className="navbar-nav me-auto">
