@@ -2,10 +2,9 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
 
   get '/property/:id' => 'static_pages#property'
-  get '/properties/new' => 'static_pages#new_property'
+  get '/property/new' => 'static_pages#new_property'
 
   get '/login' => 'static_pages#login'
-  get '/signup' => 'static_pages#login'
 
   get '/logout' => 'static_pages#logout'
   

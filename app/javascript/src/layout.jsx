@@ -43,10 +43,7 @@ const Layout = (props) => {
                   <a className="nav-link" href="/properties/new">Host your home</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/login">Login</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/signup">Signup</a>
+                  <a className="nav-link" href="/login">Login or Signup</a>
                 </li>
               </ul>
             )}
