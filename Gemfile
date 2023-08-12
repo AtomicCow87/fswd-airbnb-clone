@@ -49,7 +49,7 @@ gem 'mail', '>= 2.8.0.rc1'
 gem 'mini_magick', '~> 4.8'
 
 # Use Rails Admin for admin dashboard
-gem 'rails_admin', '~> 2.0'
+# gem 'rails_admin', '~> 2.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
