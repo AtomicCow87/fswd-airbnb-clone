@@ -35,6 +35,7 @@ class NewProperty extends React.Component {
 
   handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name, value);
     this.setState((prevState) => ({
       property: {
         ...prevState.property,
@@ -51,8 +52,8 @@ class NewProperty extends React.Component {
       formData.append('property[images][]', formFileMultiple.files[i]);
     }
     // Set other params in the form data.
-    formData.set('property[title]', this.state.title);
-    formData.set('property[city]', this.state.city);
+    formData.set('property[title]', this.state.property.title);
+    formData.set('property[city]', this.state.property.city);
     
 
     console.log(formData);
