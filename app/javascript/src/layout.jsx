@@ -28,16 +28,10 @@ const Layout = (props) => {
             {authenticated ? (
               <ul className="navbar-nav me-auto">
                 <li className="nav-item">
-                  <a className="nav-link" href="/">Home</a>
-                </li>               
+                  <a className="nav-link" href="/properties/new">Host your home</a>
+                </li>              
                 <li className="nav-item">
                   <a className="nav-link" href={`/users/${username}`}>My Account</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href={`/users/${username}/bookings`}>My Bookings</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href={`/users/${username}/properties`}>My Properties</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/logout">Logout</a>
@@ -46,7 +40,7 @@ const Layout = (props) => {
             ) : (
               <ul className="navbar-nav me-auto">
                 <li className="nav-item">
-                  <a className="nav-link" href="/">Home</a>
+                  <a className="nav-link" href="/properties/new">Host your home</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/login">Login</a>
