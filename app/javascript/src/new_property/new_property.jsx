@@ -13,11 +13,11 @@ class NewProperty extends React.Component {
       description: '',
       country: '',
       property_type: '',
-      price_per_night: '',
-      max_guests: '',
-      bedrooms: '',
-      beds: '',
-      baths: '',
+      price_per_night: 0,
+      max_guests: 0,
+      bedrooms: 0,
+      beds: 0,
+      baths: 0,
       images: '',
     },
     errors: [],
@@ -44,6 +44,7 @@ class NewProperty extends React.Component {
   }
 
   handleSubmit = (e) => {
+    e.preventDefault();
 
     let formData = new FormData();
     for (let i = 0; i < formFileMultiple.files.length; i++) {
@@ -52,14 +53,9 @@ class NewProperty extends React.Component {
     // Set other params in the form data.
     formData.set('property[title]', this.state.title);
     formData.set('property[city]', this.state.city);
-    formData.set('property[description]', this.state.description);
-    formData.set('property[country]', this.state.country);
-    formData.set('property[property_type]', this.state.property_type);
-    formData.set('property[price_per_night]', this.state.price_per_night);
-    formData.set('property[max_guests]', this.state.max_guests);
-    formData.set('property[bedrooms]', this.state.bedrooms);
-    formData.set('property[beds]', this.state.beds);
-    formData.set('property[baths]', this.state.baths);
+    
+
+    console.log(formData);
 
     fetch('/api/properties', safeCredentialsForm({
       method: 'POST',
@@ -67,6 +63,7 @@ class NewProperty extends React.Component {
     }))
       .then(handleErrors)
       .then(data => {
+        console.log(data);
         if (data.success) {
           window.location.href = (`/property/${data.property.id}`);
         }
@@ -214,7 +211,7 @@ class NewProperty extends React.Component {
                       id="formFileMultiple"
                       name="images"
                       type="file"
-                      value={property.image}
+                      value={property.images}
                       onChange={this.handleChange}
                       multiple
                     />
