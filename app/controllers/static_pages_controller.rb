@@ -15,4 +15,8 @@ class StaticPagesController < ApplicationController
   def logout
     render 'logout'
   end
+
+  def new_property
+    render 'new_property'
+  end
 end
