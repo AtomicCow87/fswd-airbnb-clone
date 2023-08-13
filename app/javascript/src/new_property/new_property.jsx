@@ -35,7 +35,6 @@ class NewProperty extends React.Component {
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     this.setState((prevState) => ({
       property: {
         ...prevState.property,
@@ -66,7 +65,9 @@ class NewProperty extends React.Component {
       .then(data => {
         console.log(data);
         if (data.success) {
-          window.location.href = (`/property/${data.property.id}`);
+          let test = data.property.id;
+          console.log(test);
+          window.location.href = (`/property/${test}`);
         }
       })
       .catch(error => {

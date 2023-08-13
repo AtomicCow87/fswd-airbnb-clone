@@ -16,16 +16,19 @@ module Api
 
     def create
       token = cookies.signed[:airbnb_session_token]
+
       session = Session.find_by(token: token)
       return render json: { error: 'user not logged in' }, status: :unauthorized if !session
 
-      begin
-        @property = Property.new(property_params)
-        @property.user = @current_user
-        render 'api/properties/create', status: :created
-      rescue ArgumentError => e
-        render json: { error: e.message }, status: :bad_request
-      end 
+      user = session.user
+
+      @property = user.properties.new(property_params)
+
+      if @property.save
+        render 'api/properties/create'
+      else
+        render json: { success: false }, status: :bad_request
+      end
     end
 
     private
