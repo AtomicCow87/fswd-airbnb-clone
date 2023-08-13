@@ -20,7 +20,7 @@ class NewProperty extends React.Component {
       baths: 0,
       images: '',
     },
-    errors: [],
+    errors: '',
   }
 
   componentDidMount() {
@@ -53,6 +53,14 @@ class NewProperty extends React.Component {
     // Set other params in the form data.
     formData.set('property[title]', this.state.property.title);
     formData.set('property[city]', this.state.property.city);
+    formData.set('property[description]', this.state.property.description);
+    formData.set('property[country]', this.state.property.country);
+    formData.set('property[property_type]', this.state.property.property_type);
+    formData.set('property[price_per_night]', this.state.property.price_per_night);
+    formData.set('property[max_guests]', this.state.property.max_guests);
+    formData.set('property[bedrooms]', this.state.property.bedrooms);
+    formData.set('property[beds]', this.state.property.beds);
+    formData.set('property[baths]', this.state.property.baths);
     
 
     console.log(formData);
@@ -63,11 +71,8 @@ class NewProperty extends React.Component {
     }))
       .then(handleErrors)
       .then(data => {
-        console.log(data);
         if (data.success) {
-          let test = data.property.id;
-          console.log(test);
-          window.location.href = (`/property/${test}`);
+          window.location.href = (`/property/${data.property.id}`);
         }
       })
       .catch(error => {
@@ -120,7 +125,7 @@ class NewProperty extends React.Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="description">Description</label>
+                    <label htmlFor="description">Description <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="description"
@@ -128,10 +133,11 @@ class NewProperty extends React.Component {
                       type="text"
                       value={property.description}
                       onChange={this.handleChange}
+                      required
                     />
                   </div>                
                   <div className="form-group">
-                    <label htmlFor="country">Country</label>
+                    <label htmlFor="country">Country <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="country"
@@ -139,10 +145,11 @@ class NewProperty extends React.Component {
                       type="text"
                       value={property.country}
                       onChange={this.handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="property_type">Property Type</label>
+                    <label htmlFor="property_type">Property Type <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="property_type"
@@ -150,10 +157,11 @@ class NewProperty extends React.Component {
                       type="text"
                       value={property.property_type}
                       onChange={this.handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="price_per_night">Price Per Night</label>
+                    <label htmlFor="price_per_night">Price Per Night <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="price_per_night"
@@ -161,10 +169,11 @@ class NewProperty extends React.Component {
                       type="number"
                       value={property.price_per_night}
                       onChange={this.handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="max_guests">Max Guests</label>
+                    <label htmlFor="max_guests">Max Guests <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="max_guests"
@@ -172,10 +181,11 @@ class NewProperty extends React.Component {
                       type="number"
                       value={property.max_guests}
                       onChange={this.handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="bedrooms">Bedrooms</label>
+                    <label htmlFor="bedrooms">Bedrooms <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="bedrooms"
@@ -183,10 +193,11 @@ class NewProperty extends React.Component {
                       type="number"
                       value={property.bedrooms}
                       onChange={this.handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="beds">Beds</label>
+                    <label htmlFor="beds">Beds <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="beds"
@@ -194,10 +205,11 @@ class NewProperty extends React.Component {
                       type="number"
                       value={property.beds}
                       onChange={this.handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="baths">Baths</label>
+                    <label htmlFor="baths">Baths <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="baths"
@@ -205,6 +217,7 @@ class NewProperty extends React.Component {
                       type="number"
                       value={property.baths}
                       onChange={this.handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -223,12 +236,9 @@ class NewProperty extends React.Component {
                   <button type="submit" className="btn btn-danger rounded-pill mt-3">
                     Create Property
                   </button>
-                  {errors.length > 0 && (
-                    <div className="alert alert-danger mt-3" role="alert">
-                      {errors.map(error => (
-                        console.log(error),
-                        <div key={error}>{error.value}</div>
-                      ))}
+                  {errors && (
+                    <div className="alert alert-danger mt-3" role="alert">                   
+                        <div key={errors}>{errors}</div>
                     </div>
                   )}
                 </form>

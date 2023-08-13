@@ -25,15 +25,15 @@ module Api
       @property = user.properties.new(property_params)
 
       if @property.save
-        render 'api/properties/create'
+        render 'api/properties/create', status: :created
       else
-        render json: { success: false, errors: @property.errors.full_messages }, status: :bad_request
+        render json: { success: false, error: @property.errors }, status: :bad_request
       end
     end
 
     private
       def property_params
-        params.require(:property).permit(:title, :city, images: [])
+        params.require(:property).permit(:title, :city, :description, :country, :property_type, :price_per_night, :max_guests, :bedrooms, :beds, :baths, images: [])
       end
   end
 end
