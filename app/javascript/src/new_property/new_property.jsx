@@ -79,6 +79,7 @@ class NewProperty extends React.Component {
 
   render () {
     const { authenticated, property, errors } = this.state;
+    
     if (!authenticated) {
       return (
         <div className="border p-5 my-5 text-center">
@@ -225,7 +226,8 @@ class NewProperty extends React.Component {
                   {errors.length > 0 && (
                     <div className="alert alert-danger mt-3" role="alert">
                       {errors.map(error => (
-                        <div key={error}>{error}</div>
+                        console.log(error),
+                        <div key={error}>{error.value}</div>
                       ))}
                     </div>
                   )}

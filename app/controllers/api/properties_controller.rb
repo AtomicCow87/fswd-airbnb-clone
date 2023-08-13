@@ -27,7 +27,7 @@ module Api
       if @property.save
         render 'api/properties/create'
       else
-        render json: { success: false }, status: :bad_request
+        render json: { success: false, errors: @property.errors.full_messages }, status: :bad_request
       end
     end
 

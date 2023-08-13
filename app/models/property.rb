@@ -6,7 +6,7 @@ class Property < ApplicationRecord
   validates :title, presence: true, length: { maximum: 70 }
   validates :description, presence: false, length: { maximum: 2000 }
   validates :city, presence: true, length: { maximum: 200 }
-  validates :country, presence: false, length: { maximum: 200 }
+  validates :country, presence: true, length: { maximum: 200 }
   validates :property_type, presence: false, length: { maximum: 200 }
   validates :price_per_night, presence: false, numericality: { only_integer: true, greater_than: 0, less_than: 99999, allow_blank: true }
   validates :max_guests, presence: false, numericality: { only_integer: true, greater_than: 0, less_than: 20, allow_blank: true }
