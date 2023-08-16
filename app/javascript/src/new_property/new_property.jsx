@@ -48,7 +48,7 @@ class NewProperty extends React.Component {
 
     let formData = new FormData();
     for (let i = 0; i < formFileMultiple.files.length; i++) {
-      formData.append('property[images][]', formFileMultiple.files[i]);
+      formData.append('property[image_url][]', formFileMultiple.files[i]);
     }
     // Set other params in the form data.
     formData.set('property[title]', this.state.property.title);
@@ -69,16 +69,25 @@ class NewProperty extends React.Component {
       method: 'POST',
       body: formData,
     }))
-      .then(handleErrors)
+      .then(response => {
+        if (!response.ok) {
+          throw response.json();
+        }
+        return response.json();
+      })
       .then(data => {
-        if (data.success) {
+        console.log(data);
+        if (data.property) {
+          console.log(data);
           window.location.href = (`/property/${data.property.id}`);
         }
       })
       .catch(error => {
-        this.setState({
-          errors: error,
-        })
+        error.then((messages) => {
+          this.setState({
+            errors: error,
+          })
+        });
       })
   }
 
@@ -94,7 +103,7 @@ class NewProperty extends React.Component {
     };
 
     return (
-      <Layout>
+      <Layout auth={authenticated}>
         <div className="container">
           <div className="row">
             <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
