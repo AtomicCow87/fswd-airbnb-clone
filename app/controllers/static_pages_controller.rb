@@ -1,5 +1,4 @@
 class StaticPagesController < ApplicationController
-  before_action :require_login
 
   def home
     render 'home'
@@ -11,7 +10,6 @@ class StaticPagesController < ApplicationController
   end
 
   def login
-    @auth = { token: cookies.signed[:airbnb_session_token] }.to_json
     render 'login'
   end
 
@@ -21,16 +19,5 @@ class StaticPagesController < ApplicationController
 
   def new_property
     render 'new_property'
-  end
-
-  def require_login
-    token = cookies.signed[:airbnb_session_token]
-    session = Session.find_by(token: token)
-
-    if session
-      @auth = { loggedin: true }.to_json
-    else
-      @auth = { loggedin: false }.to_json
-    end
   end
 end
