@@ -18,7 +18,7 @@ class NewProperty extends React.Component {
       bedrooms: 0,
       beds: 0,
       baths: 0,
-      image_url: [],
+      image_url: null,
     },
     errors: [],
   }
@@ -41,28 +41,26 @@ class NewProperty extends React.Component {
         [name]: value,
       }
     }));
-  }
 
+  }
+ 
   handleImageChange = (e) => {
-    const { name, files } = e.target;
-    console.log(name);
-    console.log(files);
-    console.log(this.state.property.image_url);
-    this.setState({
+    this.setState((prevState) => ({
       property: {
-        [name]: files,
+        ...prevState.property,
+        image_url: e.target.files[0],
       }
-    });
-    console.log(this.state.property.image_url);
+    }));
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     let formData = new FormData();
-    for (let i = 0; i < formFileMultiple.files.length; i++) {
+    /* for (let i = 0; i < formFileMultiple.files.length; i++) {
       formData.append('property[image_url][]', formFileMultiple.files[i]);
-    }
+    } */
+    formData.set('property[image_url]', this.state.property.image_url);
     // Set other params in the form data.
     formData.set('property[title]', this.state.property.title);
     formData.set('property[city]', this.state.property.city);
@@ -246,14 +244,15 @@ class NewProperty extends React.Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="image">Image Upload  <small className="text-danger">*</small></label>
+                    <label htmlFor="image_url">Image Upload  <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
                       id="formFileMultiple"
                       name="image_url"
                       type="file"
+                      accept="image/*"
                       onChange={this.handleImageChange}
-                      multiple
+                      required
                     />
                   </div>
                   <p className="text-danger my-3">* Required</p>
