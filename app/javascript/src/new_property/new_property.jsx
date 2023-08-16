@@ -18,7 +18,7 @@ class NewProperty extends React.Component {
       bedrooms: 0,
       beds: 0,
       baths: 0,
-      images: '',
+      image_url: [],
     },
     errors: [],
   }
@@ -41,6 +41,19 @@ class NewProperty extends React.Component {
         [name]: value,
       }
     }));
+  }
+
+  handleImageChange = (e) => {
+    const { name, files } = e.target;
+    console.log(name);
+    console.log(files);
+    console.log(this.state.property.image_url);
+    this.setState({
+      property: {
+        [name]: files,
+      }
+    });
+    console.log(this.state.property.image_url);
   }
 
   handleSubmit = (e) => {
@@ -73,8 +86,9 @@ class NewProperty extends React.Component {
         return response.json();
       })
       .then(data => {
+        console.log(data);
         if (data.property) {
-          window.location.href = (`/property/${data.property.id}`);
+          //window.location.href = (`/property/${data.property.id}`);
         }
       })
       .catch(error => {
@@ -236,11 +250,10 @@ class NewProperty extends React.Component {
                     <input
                       className="form-control"
                       id="formFileMultiple"
-                      name="images"
+                      name="image_url"
                       type="file"
-                      value={property.images}
-                      onChange={this.handleChange}
-                      required
+                      onChange={this.handleImageChange}
+                      multiple
                     />
                   </div>
                   <p className="text-danger my-3">* Required</p>
