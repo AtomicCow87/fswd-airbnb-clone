@@ -42,9 +42,6 @@ gem 'webrick', '~> 1.7'
 # Mail gem
 gem 'mail', '>= 2.8.0.rc1'
 
-# Active Storage Image Processing
-# gem 'ruby-vips', '~> 2.1', '>= 2.1.4'
-
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
 
