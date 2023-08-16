@@ -20,7 +20,7 @@ class NewProperty extends React.Component {
       baths: 0,
       images: '',
     },
-    errors: '',
+    errors: [],
   }
 
   componentDidMount() {
@@ -61,9 +61,6 @@ class NewProperty extends React.Component {
     formData.set('property[bedrooms]', this.state.property.bedrooms);
     formData.set('property[beds]', this.state.property.beds);
     formData.set('property[baths]', this.state.property.baths);
-    
-
-    console.log(formData);
 
     fetch('/api/properties', safeCredentialsForm({
       method: 'POST',
@@ -76,16 +73,21 @@ class NewProperty extends React.Component {
         return response.json();
       })
       .then(data => {
-        console.log(data);
         if (data.property) {
-          console.log(data);
           window.location.href = (`/property/${data.property.id}`);
         }
       })
       .catch(error => {
         error.then((messages) => {
+          let errorObj = messages.error;
+          let errorList = [];
+
+          for (let key in errorObj) {
+            errorList.push(`${key}: ${errorObj[key]}`);
+          }
+
           this.setState({
-            errors: error,
+            errors: errorList,
           })
         });
       })
@@ -245,9 +247,12 @@ class NewProperty extends React.Component {
                   <button type="submit" className="btn btn-danger rounded-pill mt-3">
                     Create Property
                   </button>
-                  {errors && (
-                    <div className="alert alert-danger mt-3" role="alert">                   
-                        <div key={errors}>{errors}</div>
+                  {errors.length > 0 && (
+                    <div className="alert alert-danger mt-3" role="alert">
+                      <h4 className="alert-heading">There was an error creating your property</h4>
+                      {errors.map((error) => (
+                        <div key={error}>{error}</div>
+                      ))}
                     </div>
                   )}
                 </form>
