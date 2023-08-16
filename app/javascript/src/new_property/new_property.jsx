@@ -240,7 +240,7 @@ class NewProperty extends React.Component {
                       type="file"
                       value={property.images}
                       onChange={this.handleChange}
-                      multiple
+                      required
                     />
                   </div>
                   <p className="text-danger my-3">* Required</p>
