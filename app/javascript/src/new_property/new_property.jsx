@@ -31,6 +31,33 @@ class NewProperty extends React.Component {
           authenticated: data.authenticated,
         })
       })
+    this.checkEdit();
+  }
+
+  checkEdit = () => {
+    const url = window.location.href;
+    const propertyId = url.substring(url.lastIndexOf('/') + 1);
+    if (propertyId !== 'new') {
+      fetch(`/api/properties/${propertyId}`)
+        .then(handleErrors)
+        .then(data => {
+          this.setState({
+            property: {
+              title: data.property.title,
+              city: data.property.city,
+              description: data.property.description,
+              country: data.property.country,
+              property_type: data.property.property_type,
+              price_per_night: data.property.price_per_night,
+              max_guests: data.property.max_guests,
+              bedrooms: data.property.bedrooms,
+              beds: data.property.beds,
+              baths: data.property.baths,
+              image_url: data.property.image_url,
+            }
+          })
+        })
+    }
   }
 
   handleChange = (e) => {
