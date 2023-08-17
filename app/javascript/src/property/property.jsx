@@ -10,6 +10,8 @@ class Property extends React.Component {
   state = {
     property: {},
     loading: true,
+    authenticated: false,
+    username: null,
   }
 
   componentDidMount() {
@@ -21,7 +23,22 @@ class Property extends React.Component {
           loading: false,
         })
       })
+    this.checkAuth();
   }
+
+  checkAuth = () => {
+    fetch('/api/authenticated')
+      .then(handleErrors)
+      .then(data => {
+        if (data.authenticated) {
+          this.setState({ 
+            authenticated: true,
+            username: data.username, 
+          });
+        }
+      })
+  }
+    
 
   render () {
     const { property, loading } = this.state;
@@ -67,6 +84,11 @@ class Property extends React.Component {
               </div>
               <hr />
               <p>{description}</p>
+              <div className="py-5">
+                {this.state.authenticated ? (
+                  <a className="btn btn-outline-info btn-sm me-3" href={`/properties/${id}`}>Edit</a>
+                ) : null}
+              </div>
             </div>
             <div className="col-12 col-lg-5">
               <BookingWidget property_id={id} price_per_night={price_per_night} />
