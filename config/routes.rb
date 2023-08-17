@@ -3,8 +3,7 @@ Rails.application.routes.draw do
 
   get '/property/:id' => 'static_pages#property'
   
-  get '/properties/new' => 'static_pages#new_property'
-  get '/properties/:id/edit' => 'static_pages#new_property'
+  get '/properties/:id' => 'static_pages#new_property'
 
   get '/login' => 'static_pages#login'
 
