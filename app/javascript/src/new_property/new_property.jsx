@@ -57,10 +57,8 @@ class NewProperty extends React.Component {
     e.preventDefault();
 
     let formData = new FormData();
-    /* for (let i = 0; i < formFileMultiple.files.length; i++) {
-      formData.append('property[image_url][]', formFileMultiple.files[i]);
-    } */
-    formData.set('property[image_url]', this.state.property.image_url);
+    let imagePicker = document.getElementById('imagePicker');
+    formData.append('property[image]', imagePicker.files[0]);
     // Set other params in the form data.
     formData.set('property[title]', this.state.property.title);
     formData.set('property[city]', this.state.property.city);
@@ -247,7 +245,7 @@ class NewProperty extends React.Component {
                     <label htmlFor="image_url">Image Upload  <small className="text-danger">*</small></label>
                     <input
                       className="form-control"
-                      id="formFileMultiple"
+                      id="imagePicker"
                       name="image_url"
                       type="file"
                       accept="image/*"
