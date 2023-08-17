@@ -82,9 +82,8 @@ class NewProperty extends React.Component {
         return response.json();
       })
       .then(data => {
-        console.log(data);
         if (data.property) {
-          //window.location.href = (`/property/${data.property.id}`);
+          window.location.href = (`/property/${data.property.id}`);
         }
       })
       .catch(error => {
