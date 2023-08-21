@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   
   get '/users/:user_id' => 'static_pages#user'
 
+  get '/bookings/:id/success' => 'static_pages#booking'
+
   namespace :api do
     # Add routes below this line
     resources :users, only: [:create]
