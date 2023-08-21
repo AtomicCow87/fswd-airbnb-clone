@@ -15,7 +15,7 @@ module Api
     end
 
     def index_by_user
-      @properties = Property.where(username: params[:username]).order(created_at: :desc).page(params[:page]).per(6)
+      @properties = Property.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(6)
       return render json: { error: 'not_found' }, status: :not_found unless @properties
 
       render 'api/properties/index', status: :ok
