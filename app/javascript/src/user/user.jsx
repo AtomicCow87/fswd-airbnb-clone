@@ -23,14 +23,19 @@ class User extends React.Component {
         this.setState({ 
           authenticated: data.authenticated,
           username: data.username,
+          user_id: data.user_id,
         });
+      })
+      .then(() => {
+        this.getProperties();
       })
   }
 
   getProperties = () => {
-    fetch(`/api/properties/${this.state.username}?page=1`)
+    fetch(`/api/properties/${this.state.user_id}?page=1`)
       .then(handleErrors)
       .then(data => {
+        console.log(data)
         this.setState({
           properties: data.properties,
           total_pages: data.total_pages,
@@ -45,7 +50,7 @@ class User extends React.Component {
       return;
     }
     this.setState({ loading: true });
-    fetch(`/api/properties/${this.state.username}?page=${this.state.next_page}`)
+    fetch(`/api/properties/${this.state.user_id}?page=${this.state.next_page}`)
       .then(handleErrors)
       .then(data => {
         this.setState({
@@ -61,6 +66,8 @@ class User extends React.Component {
     const { authenticated, username, properties, next_page, loading } = this.state;
 
     let page = window.location.pathname.replace('/user/', '')
+
+    console.log(properties)
 
     if (!authenticated) {
       return (
