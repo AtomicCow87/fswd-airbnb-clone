@@ -31,7 +31,7 @@ const Layout = (props) => {
                   <a className="nav-link" href="/properties/new">Host your home</a>
                 </li>              
                 <li className="nav-item">
-                  <a className="nav-link" href={`/users/${username}`}>My Account</a>
+                  <a className="nav-link" href={`/user/${username}`}>My Account</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/logout">Logout</a>
