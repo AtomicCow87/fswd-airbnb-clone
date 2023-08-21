@@ -9,9 +9,9 @@ Rails.application.routes.draw do
 
   get '/logout' => 'static_pages#logout'
   
-  get '/users/:user_id' => 'static_pages#user'
+  get '/user/:user_id' => 'static_pages#user'
 
-  get '/bookings/:id/success' => 'static_pages#booking'
+  get '/booking/:id/success' => 'static_pages#booking'
 
   namespace :api do
     # Add routes below this line

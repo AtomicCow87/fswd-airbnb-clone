@@ -20,4 +20,13 @@ class StaticPagesController < ApplicationController
   def new_property
     render 'new_property'
   end
+
+  def user
+    @data = { user_id: params[:user_id] }.to_json
+    render 'user'
+  end
+
+  def booking
+    render 'booking'
+  end
 end
