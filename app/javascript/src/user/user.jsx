@@ -21,6 +21,22 @@ class User extends React.Component {
           user_id: data.user_id,
         });
       })
+      .then(() => {
+        if (this.state.authenticated) {
+          this.getProperties();
+        }
+      })
+  }
+
+  getProperties = () => {
+    fetch('/api/properties/index_by_user')
+      .then(handleErrors)
+      .then(data => {
+        console.log(data)
+        this.setState({
+          properties: data.properties,
+        })
+      })
   }
 
   render() {
