@@ -17,7 +17,7 @@ class Booking extends React.Component {
 
     return (
       <div>
-        <p>Booking</p>
+        <p>Temp booking page</p>
       </div>
     );
   }
