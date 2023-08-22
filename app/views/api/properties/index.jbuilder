@@ -9,6 +9,7 @@ json.properties do
     json.country property.country
     json.property_type property.property_type
     json.price_per_night property.price_per_night
+    json.user_id property.user_id
     if property.image.attached?
       json.image_url url_for(property.image)
     else

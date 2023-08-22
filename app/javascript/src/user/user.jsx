@@ -9,6 +9,7 @@ class User extends React.Component {
     authenticated: false,
     username: null,
     user_id: null,
+    properties: [],
   }
 
   componentDidMount() {
@@ -29,7 +30,7 @@ class User extends React.Component {
   }
 
   getProperties = () => {
-    fetch('/api/properties/index_by_user')
+    fetch('/api/properties')
       .then(handleErrors)
       .then(data => {
         console.log(data)
@@ -80,7 +81,19 @@ class User extends React.Component {
             </div>
           </div>
           <div className="row">
-
+            {properties.map(property => {
+              if (property.user_id == this.state.user_id) {
+                return (
+                  <div key={property.id} className="col-6 col-lg-4 mb-4 property">
+                    <a href={`/property/${property.id}`} className="text-body text-decoration-none">
+                      <p className="text-uppercase mb-0 text-secondary"><small><b>{property.city}</b></small></p>
+                      <h6 className="mb-0">{property.title}</h6>
+                      <p className="mb-0"><small>${property.price_per_night} USD/night</small></p>
+                    </a>
+                  </div>
+                )
+              }
+            })}
           </div> 
         </div>
       </Layout>
