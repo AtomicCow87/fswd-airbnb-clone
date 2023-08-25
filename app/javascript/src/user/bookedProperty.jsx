@@ -36,7 +36,6 @@ class BookedProperty extends React.Component {
       fetch(`/api/user/${properties.id}/bookings`)
         .then(handleErrors)
         .then(data => {
-          console.log(data);
           this.setState({
             bookings: this.state.bookings.concat(data.bookings),
           })
