@@ -14,20 +14,12 @@ module Api
       render 'api/properties/show', status: :ok
     end
 
-#    Couldn't get this to work
-#
-#    def index_by_user
-#      token = cookies.signed[:airbnb_session_token]
-#      session = Session.find_by(token: token)
-#      return render json: { error: 'user not logged in' }, status: :unauthorized unless session
-#
-#      user = session.user
-#
-#      @properties = user.properties.order(created_at: :desc).page(params[:page]).per(6)
-#      return render json: { error: 'not_found' }, status: :not_found unless @properties
-#
-#      render 'api/properties/index', status: :ok
-#    end
+    def index_by_user
+      @properties = Property.where(user_id: params[:user_id]).order(created_at: :desc)
+      return render json: { error: 'not_found' }, status: :not_found unless @properties
+
+      render 'api/properties/user', status: :ok
+    end
 
     def create
       token = cookies.signed[:airbnb_session_token]

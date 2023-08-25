@@ -30,7 +30,7 @@ class User extends React.Component {
   }
 
   getProperties = () => {
-    fetch('/api/properties')
+    fetch(`/api/properties/user/${this.state.user_id}`)
       .then(handleErrors)
       .then(data => {
         console.log(data)
