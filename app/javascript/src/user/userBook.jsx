@@ -72,7 +72,7 @@ class UserBook extends React.Component {
 
     return (
       <div>
-        <h1>Bookings</h1>
+        <h1>My Bookings</h1>
         <div className="row">
           {bookedProperties.map(property => {
             return (

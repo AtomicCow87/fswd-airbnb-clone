@@ -78,9 +78,9 @@ class User extends React.Component {
               <h1>Welcome, {username}!</h1>
             </div>
           </div>
-          <div className="row">
+          <div className="row pb-5">
             <div className="col-md-auto">
-              <button className="btn btn-outline-info btn-sm" onClick={this.toggle}>{show_bookings ? 'Show Properties' : 'Show Bookings'}</button>
+              <button className="btn btn-outline-info btn-sm" onClick={this.toggle}>{show_bookings ? 'Show Booked Properties' : 'Show My Bookings'}</button>
             </div>
           </div>
           <div className="row">

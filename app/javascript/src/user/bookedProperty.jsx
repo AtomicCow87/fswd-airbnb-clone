@@ -81,7 +81,7 @@ class BookedProperty extends React.Component {
       <React.Fragment>
         <div className="row">
           <div className="col-12">
-            <h2>Booked Properties</h2>
+            <h2>My Booked Properties</h2>
           </div>
         </div>
         <div className="row">
