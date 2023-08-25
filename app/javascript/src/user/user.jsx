@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '@src/layout';
 import { handleErrors } from '@utils/fetchHelper';
 import UserBook from './userBook';
+import BookedProperty from './bookedProperty';
 
 import './user.scss';
 
