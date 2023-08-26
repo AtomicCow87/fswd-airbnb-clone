@@ -13,6 +13,7 @@ class UserBook extends React.Component {
     fetch(`/api/user/${this.props.user_id}/bookings`)
       .then(handleErrors)
       .then(data => {
+        console.log(data);
         this.setState({
           bookings: data.bookings,
         })
