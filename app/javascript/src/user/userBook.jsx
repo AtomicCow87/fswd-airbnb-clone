@@ -56,6 +56,7 @@ class UserBook extends React.Component {
             end_date: bookings[i].end_date,
             is_paid: bookings[i].is_paid,
             total_price: total_price,
+            days: days,
           }
         )
       }
@@ -138,6 +139,7 @@ class UserBook extends React.Component {
                     <p className="card-text">Price Per Night: ${property.price_per_night}</p>
                     <p className="card-text">Start Date: {property.start_date}</p>
                     <p className="card-text">End Date: {property.end_date}</p>
+                    <p className="card-text">Days: {property.days}</p>
                     <p className="card-text">Paid: {property.is_paid ? 'Yes' : 'No'}</p>
                     <a href={`/property/${property.property_id}`} className="btn btn-primary">View Property</a>
                     {property.is_paid ? 
