@@ -24,17 +24,6 @@ module Api
       render 'api/bookings/index', status: :ok
     end
 
-    def get_user_booked_properties
-      token = cookies.signed[:airbnb_session_token]
-      session = Session.find_by(token: token)
-      return render json: { error: 'user not logged in' }, status: :unauthorized if !session
-
-      user = session.user
-      @bookings = user.bookings.where("end_date > ? ", Date.today)
-      @properties = @bookings.map { |booking| booking.property }
-      render 'api/properties/user', status: :ok
-    end
-
     def get_user_bookings
       token = cookies.signed[:airbnb_session_token]
       session = Session.find_by(token: token)
