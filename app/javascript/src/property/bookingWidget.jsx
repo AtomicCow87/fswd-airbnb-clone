@@ -14,7 +14,7 @@ class BookingWidget extends React.Component {
     endDate: null,
     focusedInput: null,
     loading: false,
-    error: false,
+    error: null,
   }
 
   componentDidMount() {
@@ -55,12 +55,20 @@ class BookingWidget extends React.Component {
           }
         })
     }))
-      .then(handleErrors)
+      .then(response => {
+        if (!response.ok) {
+          throw response.json();
+        }
+        return response.json();
+      })
       .then(response => {
         return this.initiateStripeCheckout(response.booking.id)
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          error: error.message,
+        })
       })
   }
 
@@ -81,10 +89,16 @@ class BookingWidget extends React.Component {
           // If `redirectToCheckout` fails due to a browser or network
           // error, display the localized error message to your customer
           // using `result.error.message`.
+          this.setState({
+            error: result.error.message,
+          })
         });
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          error: error.message,
+        })
       })
   }
 
@@ -95,7 +109,7 @@ class BookingWidget extends React.Component {
   isDayBlocked = day => this.state.existingBookings.filter(b => day.isBetween(b.start_date, b.end_date, 'day', '[)')).length > 0
 
   render () {
-    const { authenticated, startDate, endDate, focusedInput } = this.state;
+    const { authenticated, startDate, endDate, focusedInput, error } = this.state;
     if (!authenticated) {
       return (
         <div className="border p-4 mb-4">
@@ -137,6 +151,9 @@ class BookingWidget extends React.Component {
           )}
           <button type="submit" className="btn btn-large btn-danger btn-block">Book</button>
         </form>
+        {error && (
+          <div className="alert alert-danger mt-2">{error}</div>
+        )}
       </div>
     )
   }
