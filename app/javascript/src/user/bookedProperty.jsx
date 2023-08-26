@@ -19,8 +19,12 @@ class BookedProperty extends React.Component {
       })
       .then(() => {
         if (this.state.properties.length > 0) {
-          this.getPropertyBookings();
+          this.setState({
+            loading: false,
+          })
+          return;
         }
+        this.getPropertyBookings();
       })
       .then(() => {
         setTimeout(() => {
@@ -71,13 +75,30 @@ class BookedProperty extends React.Component {
   }
 
   render() {
-    const { bookedProperties, loading } = this.state;
+    const { bookedProperties, properties, loading } = this.state;
 
     if (loading) {
       return (
         <div className="spinner-border text-info" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
+      )
+    }
+
+    if (properties.length == 0) {
+      return (
+        <React.Fragment>
+          <div className="row">
+            <div className="col-12">
+              <h2>My Booked Properties</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <p>You have no booked properties.</p>
+            </div>
+          </div>
+        </React.Fragment>
       )
     }
 

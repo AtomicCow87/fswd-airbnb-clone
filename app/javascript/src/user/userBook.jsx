@@ -18,6 +18,12 @@ class UserBook extends React.Component {
         })
       })
       .then(() => {
+        if (this.state.bookings.length == 0) {
+          this.setState({
+            loading: false,
+          })
+          return;
+        }
         this.bookedProperties();
       })
   }
@@ -64,48 +70,31 @@ class UserBook extends React.Component {
     })
   }
 
-  initiateStripeCheckout = (booking_id) => {
-    fetch(`/api/charges?booking_id=${booking_id}&cancel_url=${window.location.pathname}`, safeCredentials({
-      method: 'POST',
-    }))
-    .then(response => {
-      if (!response.ok) {
-        throw response.json();
-      }
-      return response.json();
-    })
-    .then(response => {
-      const stripe = stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
-
-      stripe.redirectToCheckout({
-        // Make the id field from the Checkout Session creation API response
-        // available to this file, so you can provide it as parameter here
-        // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-        sessionId: response.charge.checkout_session_id,
-      }).then((result) => {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer
-        // using `result.error.message`.
-        this.setState({
-          error: result.error.message,
-        })
-      });
-    })
-    .catch(error => {
-      this.setState({
-        error: error.message,
-      })
-    })
-  }
-
   render () {
-    const { bookedProperties, loading } = this.state;
+    const { bookedProperties, bookings, loading } = this.state;
 
     if (loading) {
       return (
         <div className="spinner-border text-info" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
+      )
+    }
+
+    if (bookings.length == 0) {
+      return (
+        <React.Fragment>
+          <div className="row">
+            <div className="col-12">
+              <h2>My Bookings</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <p>You have not booked any properties yet.</p>
+            </div>
+          </div>
+        </React.Fragment>
       )
     }
 
@@ -124,7 +113,6 @@ class UserBook extends React.Component {
                     <p className="card-text">End Date: {property.end_date}</p>
                     <p className="card-text">Paid: {property.is_paid ? 'Yes' : 'No'}</p>
                     <a href={`/property/${property.property_id}`} className="btn btn-primary">View Property</a>
-                    {property.is_paid ? '' : <button className="btn btn-danger ms-5" onClick={() => this.initiateStripeCheckout(property.id)}>Pay Now</button>}
                   </div>
                 </div>
               </div>
