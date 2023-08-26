@@ -92,7 +92,7 @@ class BookedProperty extends React.Component {
           {bookedProperties.map(property => {
             return (
               <div className="col-12 col-md-6 col-lg-4 mb-4" key={`property_${property.id}`}>
-                <div className="card">
+                <div className="card w-75">
                   <div className="card-body">
                     <h5 className="card-title">{property.title}</h5>
                     <p className="card-text">Start Date: {property.start_date}</p>
