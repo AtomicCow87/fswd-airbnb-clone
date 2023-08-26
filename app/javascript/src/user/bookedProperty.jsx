@@ -58,6 +58,7 @@ class BookedProperty extends React.Component {
               image_url: properties[j].image_url,
               start_date: bookings[i].start_date,
               end_date: bookings[i].end_date,
+              is_paid: bookings[i].is_paid,
             }
           )
         }
@@ -93,6 +94,7 @@ class BookedProperty extends React.Component {
                     <p className="card-text">Start Date: {property.start_date}</p>
                     <p className="card-text">End Date: {property.end_date}</p>
                     <p className="card-text">Price per night: ${property.price_per_night}</p>
+                    <p className="card-text">Paid: {property.is_paid ? 'Yes' : 'No'}</p>
                     <a href={`/properties/${property.property_id}`} className="btn btn-sm btn-primary mt-auto">View Property</a>
                   </div>
                 </div>
