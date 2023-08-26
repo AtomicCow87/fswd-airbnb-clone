@@ -74,8 +74,12 @@ class BookedProperty extends React.Component {
     const { bookedProperties, loading } = this.state;
 
     if (loading) {
-      return <p>loading...</p>;
-    };
+      return (
+        <div class="spinner-border text-info" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      )
+    }
 
     return (
       <React.Fragment>
