@@ -23,6 +23,7 @@ class UserBook extends React.Component {
           this.setState({
             loading: false,
           })
+          return;
         }
         this.formatBookings();
       })
