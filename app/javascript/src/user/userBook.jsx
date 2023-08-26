@@ -5,8 +5,8 @@ class UserBook extends React.Component {
   state = {
     bookings: [],
     properties: [],
-    bookedProperties: [],
     loading: true,
+    error: null,
   }
 
   componentDidMount() {
@@ -15,53 +15,48 @@ class UserBook extends React.Component {
       .then(data => {
         this.setState({
           bookings: data.bookings,
+          properties: data.properties,
         })
       })
-      .then(() => {
+      .then(() => { 
         if (this.state.bookings.length == 0) {
           this.setState({
             loading: false,
           })
-          return;
         }
-        this.bookedProperties();
+        this.formatBookings();
       })
-  }
-
-  bookedProperties = () => {
-    fetch(`/api/properties/user/${this.props.user_id}`)
-      .then(handleErrors)
-      .then(data => {
+      .catch(error => {
+        console.log(error);
         this.setState({
-          properties: data.properties,
+          error: error,
         })
       })
-      .then(() => {
-        if (this.state.bookings.length > 0) {
-          this.blend();
-        }
-      })
   }
 
-  blend = () => {
+  formatBookings = () => {
     const { bookings, properties } = this.state;
     const bookedProperties = [];
+
     for (let i = 0; i < bookings.length; i++) {
-      for (let j = 0; j < properties.length; j++) {
-        if (bookings[i].property_id === properties[j].id) {
-          bookedProperties.push(
-            {
-              id: bookings[i].id,
-              property_id: properties[j].id,
-              title: properties[j].title,
-              price_per_night: properties[j].price_per_night,
-              image_url: properties[j].image_url,
-              start_date: bookings[i].start_date,
-              end_date: bookings[i].end_date,
-              is_paid: bookings[i].is_paid,
-            }
-          )
-        }
+      if (bookings[i].property_id === properties[i].id) {
+        const start_date = new Date(bookings[i].start_date);
+        const end_date = new Date(bookings[i].end_date);
+        const days = (end_date - start_date) / (1000 * 60 * 60 * 24);
+        const total_price = days * properties[i].price_per_night;
+
+        bookedProperties.push(
+          {
+            id: bookings[i].id,
+            property_id: properties[i].id,
+            title: properties[i].title,
+            price_per_night: properties[i].price_per_night,
+            start_date: bookings[i].start_date,
+            end_date: bookings[i].end_date,
+            is_paid: bookings[i].is_paid,
+            total_price: total_price,
+          }
+        )
       }
     }
     this.setState({
@@ -70,8 +65,38 @@ class UserBook extends React.Component {
     })
   }
 
+  initiateStripeCheckout = (booking_id) => {
+    return fetch(`/api/charges?booking_id=${booking_id}&cancel_url=${window.location.pathname}`, safeCredentials({
+      method: 'POST',
+    }))
+      .then(handleErrors)
+      .then(response => {
+        const stripe = Stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
+  
+        stripe.redirectToCheckout({
+          // Make the id field from the Checkout Session creation API response
+          // available to this file, so you can provide it as parameter here
+          // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+          sessionId: response.charge.checkout_session_id,
+        }).then((result) => {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, display the localized error message to your customer
+          // using `result.error.message`.
+          this.setState({
+            error: result.error.message,
+          })
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          error: error,
+        })
+      })
+  }  
+
   render () {
-    const { bookedProperties, bookings, loading } = this.state;
+    const { bookings, loading, bookedProperties } = this.state;
 
     if (loading) {
       return (
@@ -108,11 +133,16 @@ class UserBook extends React.Component {
                 <div className="card w-75">
                   <div className="card-body">
                     <h5 className="card-title">{property.title}</h5>
-                    <p className="card-text">Price: ${property.price_per_night}</p>
+                    <p className="card-text"><b>Your Total:</b> ${property.total_price}</p>
+                    <p className="card-text">Price Per Night: ${property.price_per_night}</p>
                     <p className="card-text">Start Date: {property.start_date}</p>
                     <p className="card-text">End Date: {property.end_date}</p>
                     <p className="card-text">Paid: {property.is_paid ? 'Yes' : 'No'}</p>
                     <a href={`/property/${property.property_id}`} className="btn btn-primary">View Property</a>
+                    {property.is_paid ? 
+                      "" : (
+                      <button className="btn btn-warning ms-3" onClick={() => this.initiateStripeCheckout(property.id)}>Pay Now</button>
+                    )}
                   </div>
                 </div>
               </div>

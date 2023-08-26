@@ -21,7 +21,7 @@ module Api
       return render json: { error: 'cannot find property' }, status: :not_found if !property
 
       @bookings = property.bookings.where("end_date > ? ", Date.today)
-      render 'api/bookings/index'
+      render 'api/bookings/index', status: :ok
     end
 
     def get_user_booked_properties
@@ -32,7 +32,7 @@ module Api
       user = session.user
       @bookings = user.bookings.where("end_date > ? ", Date.today)
       @properties = @bookings.map { |booking| booking.property }
-      render 'api/properties/user'
+      render 'api/properties/user', status: :ok
     end
 
     def get_user_bookings
@@ -42,7 +42,8 @@ module Api
 
       user = session.user
       @bookings = user.bookings.where("end_date > ? ", Date.today)
-      render 'api/bookings/index'
+      @properties = @bookings.map { |booking| booking.property }
+      render 'api/bookings/user', status: :ok
     end
 
     private
