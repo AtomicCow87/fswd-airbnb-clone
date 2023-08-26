@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
     get '/properties/:id/bookings' => 'bookings#get_property_bookings'
     get '/user/:id/bookings' => 'bookings#get_user_bookings'
+    get '/user/:user_id/booked_properties' => 'bookings#get_user_booked_properties'
     get '/authenticated' => 'sessions#authenticated'
     get '/properties/user/:user_id' => 'properties#index_by_user'
 

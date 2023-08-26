@@ -25,3 +25,10 @@ json.properties do
     end
   end
 end
+
+json.users do
+  json.array! @users do |user|
+    json.id user.id
+    json.username user.username
+  end
+end
