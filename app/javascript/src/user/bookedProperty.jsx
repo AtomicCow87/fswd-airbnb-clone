@@ -13,65 +13,13 @@ class BookedProperty extends React.Component {
     fetch(`/api/user/${this.props.user_id}/booked_properties`)
       .then(handleErrors)
       .then(data => {
+        console.log(data);
         this.setState({
+          bookings: data.bookings,
           properties: data.properties,
+          loading: false,
         })
       })
-      .then(() => {
-        if (this.state.properties.length > 0) {
-          this.setState({
-            loading: false,
-          })
-          return;
-        }
-        this.getPropertyBookings();
-      })
-      .then(() => {
-        setTimeout(() => {
-          this.blend();
-        } , 1000)
-      })
-  }
-
-  getPropertyBookings = () => {
-    const { properties } = this.state;
-
-    for (let i = 0; i < properties.length; i++) {
-      fetch(`/api/user/${properties.id}/bookings`)
-        .then(handleErrors)
-        .then(data => {
-          this.setState({
-            bookings: this.state.bookings.concat(data.bookings),
-          })
-        })
-    }
-  }
-
-  blend = () => {
-    const { bookings, properties } = this.state;
-    const bookedProperties = [];
-    for (let i = 0; i < bookings.length; i++) {
-      for (let j = 0; j < properties.length; j++) {
-        if (bookings[i].property_id === properties[j].id) {
-          bookedProperties.push(
-            {
-              id: bookings[i].id,
-              property_id: properties[j].id,
-              title: properties[j].title,
-              price_per_night: properties[j].price_per_night,
-              image_url: properties[j].image_url,
-              start_date: bookings[i].start_date,
-              end_date: bookings[i].end_date,
-              is_paid: bookings[i].is_paid,
-            }
-          )
-        }
-      }
-    }
-    this.setState({
-      bookedProperties: bookedProperties,
-      loading: false,
-    })
   }
 
   render() {
