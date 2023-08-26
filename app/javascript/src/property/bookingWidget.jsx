@@ -43,7 +43,6 @@ class BookingWidget extends React.Component {
   submitBooking = (e) => {
     if (e) { e.preventDefault(); }
     const { startDate, endDate } = this.state;
-    console.log(startDate.format('MMM DD YYYY'), endDate.format('MMM DD YYYY'));
 
     fetch(`/api/bookings`, safeCredentials({
       method: 'POST',
