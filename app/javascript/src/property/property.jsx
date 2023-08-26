@@ -42,9 +42,14 @@ class Property extends React.Component {
 
   render () {
     const { property, loading } = this.state;
+    
     if (loading) {
-      return <p>loading...</p>;
-    };
+      return (
+        <div class="spinner-border text-info" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      )
+    }
 
     const {
       id,
