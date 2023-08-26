@@ -104,37 +104,73 @@ class BookedProperty extends React.Component {
       )
     }
 
+    if (bookedProperties.length > 0) {
+      return (
+        <React.Fragment>
+          <div className="row">
+            <div className="col-12">
+              <h2>My Booked Properties</h2>
+            </div>
+          </div>
+          <div className="row">
+            {bookedProperties.map(property => {
+              return (
+                <div className="col-12 col-md-6 col-lg-4 mb-4" key={property.id}>
+                  <div className="card w-75">
+                    <div className="card-body">
+                      <h5 className="card-title">{property.title}</h5>
+                      <p className="card-text"><b>Booked By:</b> {property.username}</p>
+                      <p className="card-text"><b>Their Total:</b> ${property.total_price}</p>
+                      <p className="card-text">Price per night: ${property.price_per_night}</p>
+                      <p className="card-text">Start Date: {property.start_date}</p>
+                      <p className="card-text">End Date: {property.end_date}</p>
+                      <p className="card-text">Days: {property.days}</p>                   
+                      <p className="card-text">Paid: {property.is_paid ? 'Yes' : 'No'}</p>
+                      <a href={`/property/${property.property_id}`} className="btn btn-sm btn-primary mt-auto">View Property</a>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <h2>My Properties</h2>
+            </div>
+          </div>
+          <div className="row">
+            {properties.map(property => {
+              return (
+                <div className="col-12 col-md-6 col-lg-4 mb-4" key={property.id}>
+                  <div className="card w-75">
+                    <div className="card-body">
+                      <h5 className="card-title">{property.title}</h5>
+                      <p className="card-text">Price per night: ${property.price_per_night}</p>
+                      <a href={`/property/${property.id}`} className="btn btn-sm btn-primary mt-auto">View Property</a>
+                      <a href={`/properties/${property.id}`} className="btn btn-sm btn-outline-info mt-auto ms-3">Edit Property</a>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </React.Fragment>
+      )
+    }
+
     return (
       <React.Fragment>
         <div className="row">
           <div className="col-12">
             <h2>My Booked Properties</h2>
           </div>
-        </div>
-        <div className="row">
-          {bookedProperties.map(property => {
-            return (
-              <div className="col-12 col-md-6 col-lg-4 mb-4" key={property.id}>
-                <div className="card w-75">
-                  <div className="card-body">
-                    <h5 className="card-title">{property.title}</h5>
-                    <p className="card-text"><b>Booked By:</b> {property.username}</p>
-                    <p className="card-text"><b>Their Total:</b> ${property.total_price}</p>
-                    <p className="card-text">Price per night: ${property.price_per_night}</p>
-                    <p className="card-text">Start Date: {property.start_date}</p>
-                    <p className="card-text">End Date: {property.end_date}</p>
-                    <p className="card-text">Days: {property.days}</p>                   
-                    <p className="card-text">Paid: {property.is_paid ? 'Yes' : 'No'}</p>
-                    <a href={`/properties/${property.property_id}`} className="btn btn-sm btn-primary mt-auto">View Property</a>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+          <div className="col-12">
+            <p>You have no Booked Properties right now.</p>
+          </div>
+        </div>        
         <div className="row">
           <div className="col-12">
-            <h2>All Properties</h2>
+            <h2>My Properties</h2>
           </div>
         </div>
         <div className="row">
@@ -145,7 +181,8 @@ class BookedProperty extends React.Component {
                   <div className="card-body">
                     <h5 className="card-title">{property.title}</h5>
                     <p className="card-text">Price per night: ${property.price_per_night}</p>
-                    <a href={`/properties/${property.id}`} className="btn btn-sm btn-primary mt-auto">View Property</a>
+                    <a href={`/property/${property.id}`} className="btn btn-sm btn-primary mt-auto">View Property</a>
+                    <a href={`/properties/${property.id}`} className="btn btn-sm btn-outline-info mt-auto ms-3">Edit Property</a>
                   </div>
                 </div>
               </div>
