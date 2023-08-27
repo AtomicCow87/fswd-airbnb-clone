@@ -14,7 +14,6 @@ class BookedProperty extends React.Component {
     fetch(`/api/user/${this.props.user_id}/booked_properties`)
       .then(handleErrors)
       .then(data => {
-        console.log(data);
         this.setState({
           bookings: data.bookings,
           properties: data.properties,
@@ -52,7 +51,6 @@ class BookedProperty extends React.Component {
         const temp = bookings[i].user_id;
         const username = users.find(user => user.id === temp).username;
 
-        console.log(username);
         bookedProperties.push(
           {
             id: bookings[i].id,
