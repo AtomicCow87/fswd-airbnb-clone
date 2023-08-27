@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get '/user/:user_id/booked_properties' => 'bookings#get_user_booked_properties'
     get '/authenticated' => 'sessions#authenticated'
     get '/properties/user/:user_id' => 'properties#index_by_user'
+    get '/bookings/:id' => 'bookings#booking_success'
 
     # stripe webhook
     post '/charges/mark_complete' => 'charges#mark_complete'
