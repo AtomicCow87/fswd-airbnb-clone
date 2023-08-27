@@ -8,6 +8,8 @@ class Booking extends React.Component {
   state = {
     booking: [],
     property: [],
+    charge: [],
+    user: [],
     loading: true,
     error: null,
   }
@@ -19,10 +21,12 @@ class Booking extends React.Component {
     fetch(`/api/bookings/${ID}`)
       .then(handleErrors)
       .then(data => {
-        console.log(data);
         this.setState({
           booking: data.booking,
           property: data.property,
+          charge: data.charge,
+          propertyuser: data.propertyuser,
+          bookinguser: data.bookinguser,
           loading: false,
         });
       })
@@ -36,7 +40,7 @@ class Booking extends React.Component {
   }
 
   render() {
-    const { booking, property, loading, error } = this.state;
+    const { booking, property, charge, loading, propertyuser, bookinguser, error } = this.state;
 
     if (loading) {
       return (
@@ -48,20 +52,33 @@ class Booking extends React.Component {
 
     return (
       <Layout>
-        <div className="container-fluid">
+        <div className="container">
           <div className="row">
-            <div className="col-md-12 m-5 text-center">
+            <div className="col-md-12 m-5">
               <h1>Your Booking has been submitted!</h1>              
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12 m-5 text-center">
+            <div className="col-md-12 m-5">
+              <h3>Your payment is currently processing.</h3>
+              <p>Check your <a href={`/user/${bookinguser.username}`}>Account Page</a> to see your updated payment status.</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col ms-5">
               <h2>Booking Details</h2>
               <p>Booking ID: {booking.id}</p>
-              <p>Check In: {booking.check_in}</p>
-              <p>Check Out: {booking.check_out}</p>
-              <p>Guests: {booking.guests}</p>
-              <p>Total: {booking.total}</p>
+              <p>Check In: {booking.start_date}</p>
+              <p>Check Out: {booking.end_date}</p>
+              <p>Total: ${charge.amount}</p>
+            </div>
+            <div className="col">
+              <h2>Property Details</h2>
+              <p>Property Name:  <a href={`/property/${property.id}`}>{property.title}</a></p>
+              <p>Property City: {property.city}</p>
+              <p>Property Price: {property.price_per_night}</p>
+              <p>Property Capacity: {property.max_guests}</p>
+              <p>Property Owner: {propertyuser.username}</p>
             </div>
           </div>
         </div>

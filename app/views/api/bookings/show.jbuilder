@@ -26,3 +26,17 @@ json.property do
     json.username @property.user.username
   end
 end
+
+json.charge do
+  json.amount @charge.amount
+end
+
+json.propertyuser do
+  json.id @propertyuser.id
+  json.username @propertyuser.username
+end
+
+json.bookinguser do
+  json.id @bookinguser.id
+  json.username @bookinguser.username
+end

@@ -53,6 +53,9 @@ module Api
       return render json: { error: 'cannot find booking' }, status: :not_found if !@booking
 
       @property = @booking.property
+      @charge = Charge.find_by(booking_id: @booking.id)
+      @propertyuser = User.find_by(id: @property.user_id)
+      @bookinguser = User.find_by(id: @booking.user_id)
 
       render 'api/bookings/show', status: :ok
     end
