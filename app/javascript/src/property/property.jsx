@@ -12,6 +12,7 @@ class Property extends React.Component {
     loading: true,
     authenticated: false,
     username: null,
+    sameUser: false,
   }
 
   componentDidMount() {
@@ -37,11 +38,22 @@ class Property extends React.Component {
           });
         }
       })
+      .then(() => {
+        this.setState({ sameUser: this.sameUser() });
+      })
+  }
+
+  sameUser = () => {
+    const { property, username } = this.state;
+    if (property.user) {
+      return property.user.username === username;
+    }
+    return false;
   }
     
 
   render () {
-    const { property, loading } = this.state;
+    const { property, loading, sameUser } = this.state;
     
     if (loading) {
       return (
@@ -90,7 +102,7 @@ class Property extends React.Component {
               <hr />
               <p>{description}</p>
               <div className="py-5">
-                {this.state.authenticated ? (
+                {sameUser ? (
                   <a className="btn btn-outline-info btn-sm me-3" href={`/properties/${id}`}>Edit</a>
                 ) : null}
               </div>
