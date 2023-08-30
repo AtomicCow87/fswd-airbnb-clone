@@ -108,6 +108,18 @@ class BookingWidget extends React.Component {
 
   isDayBlocked = day => this.state.existingBookings.filter(b => day.isBetween(b.start_date, b.end_date, 'day', '[)')).length > 0
 
+  /*
+  Can't get this to work. I've tried with both 'day' an null in the third position. Still unable to select the same start date that is already an end date for another booking. I can sometimes select the same start date as another end date but then it changes the start date of the original booking by shifting it forward by one day. The documentaion of react-dates is not very clear on how to use isDayBlocked for two bookings on the same date.
+
+  isDayBlocked = (day) => {
+    if (this.state.focusedInput === "startDate") {
+      return this.state.existingBookings.filter(b => day.isBetween(b.start_date, b.end_date, 'day', '[)')).length > 0
+    } else if (this.state.focusedInput === "endDate") {
+      return this.state.existingBookings.filter(b => day.isBetween(b.start_date, b.end_date, 'day', '(]')).length > 0
+    }
+  }
+  */
+
   render () {
     const { authenticated, startDate, endDate, focusedInput, error } = this.state;
     if (!authenticated) {
